@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jQuery Crash Course - DOM Manipulation</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <style>
+        body{
+            font-size: 17px;
+            font-family: arial;
+            background: #f4f4f4;
+            line-height: 1.5em;
+        }
+        h1{
+            background:#333;
+            color:#fff;
+            padding:20px;
+            text-align: center;
+            border-bottom: 4px #000 solid;
+            margin-bottom: 10px;
+        }
+        #container{
+            width:90%;
+            margin:auto;
+            padding:10px;
+        }
+        .pClass {
+            color:blue;
+            background: #aaa;
+        }
+
+    </style>
+</head>
+<body>
+<div id="container">
+    <h1>jQuery Crash Course</h1>
+    <h2 id="coords">Mouse Coords</h2>
+    <button id="btn1" class="fadeOut">Fade out</button>
+    <button id="btn2">It's back</button>
+    <br>
+    <br>
+    <button id="btn3">Slide Toggle</button>
+    <h2 class="header">Head One</h2>
+    <p class="paragraph">Find out the latest Ragnarok info in our iRO / kRO item database, monster database, skill
+        database,
+        guide database, map database and creation database. Read and write reviews on RO Private Servers. Play with our
+        skill simulator. Download BGM Remixes mp3, RO tools and even RO midis!</p>
+
+</div>
+<script>
+    $(function() {
+        $('#btn1').click(function(){
+            $('h2').fadeOut(1500, function(){
+                $('#btn1').text("It's gone")
+                $('#btn2').text("Fade in")
+            });
+        });
+        $('#btn2').click(function(){
+            $('h2').fadeIn(1500, function(){
+                $('#btn2').text("It's back")
+                $('#btn1').text("Fade out")
+            });
+        });
+        $('#btn3').click(function(){
+            $('h2').slideToggle(1500);
+        });
+
+    });
+
+
+</script>
+
+
+</body>
+</html>

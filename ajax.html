@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jQuery Crash Course - Selectors</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <style>
+        body{
+            font-size: 17px;
+            font-family: arial;
+            background: #f4f4f4;
+            line-height: 1.5em;
+        }
+        h1{
+            background:#333;
+            color:#fff;
+            padding:20px;
+            text-align: center;
+            border-bottom: 4px #000 solid;
+            margin-bottom: 10px;
+        }
+        #container{
+            width:90%;
+            margin:auto;
+            padding:10px;
+        }
+
+
+    </style>
+</head>
+<body>
+<div id="container">
+    <h3>Add Post</h3>
+    <form id="postForm" action="https://jsonplaceholder.typicode.com/posts">
+        <input type="text" id="title" placeholder="Title">
+        <br>
+        <br>
+        <textarea placeholder="Body" id="body"></textarea>
+        <br>
+        <br>
+        <input type="submit" value="Submit">
+    </form>
+    <ul id="myList"></ul>
+
+</div>
+<script>
+    $(document).ready(function(){
+<!--        $.get('events.html', function(data){-->
+<!--            $('#container').html(data);-->
+<!--        });-->
+<!--        $.getJSON('users.json', function(data){-->
+<!--            $.each(data, function(i, user){-->
+<!--                $('ul#myList').append('<li> '+user.firstName+' </li>')-->
+<!--            });-->
+<!--        });-->
+        $.ajax({
+            method: 'GET',
+            url: 'https://jsonplaceholder.typicode.com/posts',
+            dataType: 'json'
+        }).done(function(data){
+            $.map(data, function(post, i){
+                $('div#container').append('<h3> '+post.title+' </h3><br><p> '+post.body+' </p>')
+            });
+        });
+        $('postForm').submit(function(e){
+            e.preventDefault();
+            let title = $('#title').val();
+            let body = $('#body').val();
+            let url = $(this).attr('action');
+
+            $.post(url, {title:title, body:body}).done(function(data){
+                console.log('Post Saved');
+                console.log(data);
+
+            });
+        })
+
+    });
+
+
+</script>
+
+
+</body>
+</html>

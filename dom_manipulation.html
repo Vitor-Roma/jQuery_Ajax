@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jQuery Crash Course - DOM Manipulation</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <style>
+        body{
+            font-size: 17px;
+            font-family: arial;
+            background: #f4f4f4;
+            line-height: 1.5em;
+        }
+        h1{
+            background:#333;
+            color:#fff;
+            padding:20px;
+            text-align: center;
+            border-bottom: 4px #000 solid;
+            margin-bottom: 10px;
+        }
+        #container{
+            width:90%;
+            margin:auto;
+            padding:10px;
+        }
+        .pClass {
+            color:blue;
+            background: #aaa;
+        }
+
+    </style>
+</head>
+<body>
+<div id="container">
+    <h1>jQuery Crash Course</h1>
+    <button id="btn1">Toggle Paragraph to Blue</button>
+    <button id="btn2">Div block into Hello World</button>
+    <br>
+    <br>
+    <button id="btn3">Append Items to the list</button>
+    <h2 class="header">Head One</h2>
+    <p class="paragraph">Find out the latest Ragnarok info in our iRO / kRO item database, monster database, skill
+        database,
+        guide database, map database and creation database. Read and write reviews on RO Private Servers. Play with our
+        skill simulator. Download BGM Remixes mp3, RO tools and even RO midis!</p>
+    <div id="myDiv">
+        <input type="text" id="newItem" class="topItem">
+        <ul id="item_list">
+            <li class="item">Item1</li>
+            <li class="item">Item2</li>
+        </ul>
+        <input type="text" class="bottomItem">
+    </div>
+</div>
+<script>
+    $(document).ready(function(){
+
+        $('#btn1').click(function(){
+            $('.paragraph').toggleClass('pClass')
+        });
+        $('#btn2').click(function(){
+            $('#myDiv').html('<h3>Hello World from myDiv</h3>')
+        });
+        $('#btn3').click(function(){
+            $('#myDiv ul').append('<li>Append Item</li>');
+            $('#myDiv ul').prepend('<li>Append Item</li>');
+            $('h2.header').appendTo('ul');
+            $('h2#coords').prependTo('ul');
+            $('ul').before('<h3>Before the list</h3>')
+            $('ul').after('<h3>After the list</h3>')
+        });
+        $('.topItem').keyup(function(e){
+            let code = e.which;
+            if(code == 13){
+                e.preventDefault();
+                $('ul').prepend('<li>' + e.target.value + '</li>');
+            }
+        });
+        $('.bottomItem').keyup(function(e){
+            let code = e.which;
+            if(code == 13){
+                e.preventDefault();
+                $('ul').append('<li>' + e.target.value + '</li>');
+            }
+        });
+
+    })
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jQuery Crash Course - Events</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <style>
+        body{
+            font-size: 17px;
+            font-family: arial;
+            background: #f4f4f4;
+            line-height: 1.5em;
+        }
+        h1{
+            background:#333;
+            color:#fff;
+            padding:20px;
+            text-align: center;
+            border-bottom: 4px #000 solid;
+            margin-bottom: 10px;
+        }
+        #container{
+            width:90%;
+            margin:auto;
+            padding:10px;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <h1>jQuery Crash Course</h1>
+    <h2 id="coords">Mouse Coords</h2>
+    <button id="btn1">Click and hover to hide buttons</button>
+    <button id="btn2">Click to hide paragraph</button>
+    <br>
+    <br>
+    <button id="btn3">Double click to hide buttons</button>
+    <h2 class="header">Head One</h2>
+    <p class="paragraph">Find out the latest Ragnarok info in our iRO / kRO item database, monster database, skill
+        database,
+        guide database, map database and creation database. Read and write reviews on RO Private Servers. Play with our
+        skill simulator. Download BGM Remixes mp3, RO tools and even RO midis!</p>
+    <form id="form">
+        <label>Blue on focus, red on blur</label>
+        <br>
+        <input id="name" class="text">
+        <br>
+        <label>Blue on focus, red on blur</label>
+        <br>
+        <input id="email" class="text">
+        <br>
+        <label>Gender</label>
+        <br>
+        <select id="gender">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+        </select>
+        <br>
+        <br>
+        <input type="submit" value="Submit">
+        <br>
+    </form>
+</div>
+<script>
+    $(document).ready(function(){
+        $('#btn1').click(function(e){
+            $('#btn2').toggle();
+        });
+        $('#btn1').hover(function(){
+            $('#btn3').toggle();
+        });
+        $('#btn2').click(function(){
+            $('.paragraph').toggle();
+        });
+        $('#btn3').dblclick(function(){
+            $('#btn1').toggle()
+            $('#btn2').toggle()
+        });
+        $(document).on('mousemove', function(e){
+            $('#coords').html('Coords: Y: ' + e.clientY + ' X: ' + e.clientX);
+        });
+        $('input.text').focus(function(){
+            $(this).css('background', 'blue');
+        });
+        $('input.text').blur(function(){
+            $(this).css('background', 'red');
+        });
+        $('#gender').change(function(e){
+            console.log(e.target.value)
+        });
+        $('#form').submit(function(e){
+            e.preventDefault();
+            let name = $('input#name').val();
+            let email = $('input#email').val();
+            let gender = $('select#gender').val();
+            console.log(name);
+            console.log(email);
+            console.log(gender);
+        });
+
+
+
+    })
+
+
+</script>
+
+
+</body>
+</html>

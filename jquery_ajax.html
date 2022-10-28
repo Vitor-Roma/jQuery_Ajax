@@ -55,9 +55,16 @@
             }
 
 
+
+
+
+
+
+
+
     </style>
 </head>
-<body>
+<body class="">
 <!-- Navbar -->
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
     <!-- Left navbar links -->
@@ -87,6 +94,8 @@
             </div>
             <div class="info">
                 <a class="d-block" href="">Home</a>
+                <br>
+                <a id="themeSwitcher" class="d-block">Switch Theme Dark/Light</a>
             </div>
         </div>
 
@@ -151,46 +160,50 @@
     </div>
     <!-- /.sidebar -->
 </aside>
+<main data-theme="dark">
+    <div class="content-wrapper">
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>GET and <span id="post">POST</span> iRating API
+                        </h1>
+                        <br>
+                        <div id="container">
+                            <label>Restaurant Name</label>
+                            <input type="text" placeholder="restaurant name" id="pname">
+                            <br>
+                            <label>Restaurant Link</label>
+                            <input type="text" placeholder="restaurant detail" id="plink">
+                            <br>
+                            <br>
+                            <h3>Click on the red 'POST' to send</h3>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li><input type="text" placeholder="username" id="username1"></li>
+                            <li><input type="password" placeholder="password" id="password1"></li>
+                            <li class="breadcrumb-item" id="login">Login</li>
 
-<div class="content-wrapper">
-    <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>GET and <span id="post">POST</span> iRating API
-                    </h1>
-                    <br>
-                    <div id="container">
-                        <label>Restaurant Name</label>
-                        <input type="text" placeholder="restaurant name" id="pname">
-                        <br>
-                        <label>Restaurant Link</label>
-                        <input type="text" placeholder="restaurant detail" id="plink">
-                        <br>
-                        <br>
-                        <h3>Click on the red 'POST' to send</h3>
+                            <li class="breadcrumb-item active"></li>
+
+                        </ol>
                     </div>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href=''>Dashboard</a></li>
-
-                        <li class="breadcrumb-item active"></li>
-
-                    </ol>
-                </div>
             </div>
-        </div>
-        <!-- /.container-fluid -->
-    </section>
+            <!-- /.container-fluid -->
+        </section>
 
-</div>
-
+    </div>
+</main>
 
 <script>
      $(document).ready(function(){
-        let pname = $('#pname').val();
-        let plink = $('#plink').val();
+        var pname = $('#pname').val();
+        var plink = $('#plink').val();
+        token = ''
+        sessiontoken = ''
         $('#btn1').click(function(){
             $('div#container').empty();
             $('div#container').append('<h2> List of all Products </h2>'+'<br>')
@@ -255,16 +268,39 @@
                 });
             });
         });
+        $('#login').click(function(){
+            let usernamelogin = $('#username1').val();
+            let passwordlogin = document.getElementById("password1").value;
+            $.ajax({
+                url: "http://127.0.0.1:8000/api/login/",
+                method: 'POST',
+                data: {username:usernamelogin, password:passwordlogin},
+                success: function(data, status) {token = data.access, console.log('Logged Successfully')}
+            });
+            sessionStorage.setItem('token', token)
+        });
         $('span#post').click(function(){
             $.ajax({
               url: "http://127.0.0.1:8000/api/restaurants/",
               method: 'POST',
               data: {name:pname, link:plink, picture:null},
               success: function(data, status) {return console.log("The returned data", data);},
-              beforeSend: function(xhr, settings) { xhr.setRequestHeader('Authorization','Bearer ' + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY0ODA5NTMxLCJpYXQiOjE2NjQ4MDY1MzEsImp0aSI6IjAyY2JhMTdmNGNhZDQyYjZhMWRlNTA4ZTMxZDkxMGVkIiwidXNlcl9pZCI6MX0.4h22TwyYBWlFpafzhvYjSttzPoyYqAaLAHumTLHvd7M" ); }
+              headers: {
+                    'Authorization': 'Bearer ' + sessionStorage.getItem('token')
+                }
             });
         });
+        $('#themeSwitcher').click(function(){
+            $('body').toggleClass('dark-mode')
+        })
     });
+
+
+
+
+
+
+
 
 
 
